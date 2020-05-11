@@ -21,8 +21,10 @@ topic_top = "House"
 topic_sub = "test"
 topic_separator = "/"
 count = 0
-house_test_latest_msg = ""
+house_test_latest_msg = "Nothing Yet"
 house_test_latest_count = 0
+# set latest_message global so that on_message can set it with latest info
+global latest_msg
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(self, client, userdata, rc):
@@ -32,28 +34,29 @@ def on_connect(self, client, userdata, rc):
 	# self.subscribe(topic_top + topic_separator + topic_sub)
 	self.subscribe("House/test")
 
+#def on_message(client, userdata, msg):
+#    print("Topic: ", msg.topic+'\nMessage: '+str(msg.payload))
+
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-	count += 1
-	if msg.topic == (topic_top + topic_separator + topic_sub):
-		house_test_latest_msg = str(msg.payload)
-		house_test_latest_count = count
-		print("Msg# :",house_test_latest_count," Time: ",make_time_text(datetime.now()),"\n","  Latest House/Test Message is : ",house_test_latest_msg,"\n")
-	else:
-		print("Topic: ", msg.topic+'\nMessage: '+str(msg.payload))
+	global latest_msg
+	latest_msg = msg
+	#print("Msg# :",count,"Latest House/Test Message is : ",msg.topic,str(msg.payload),"\n")
 
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 client.connect(broker_address, broker_port, 60)
-
-# Blocking call that processes network traffic, dispatches callbacks and
-# handles reconnecting.
-# Other loop*() functions are available that give a threaded interface and a
-# manual interface.
+# Set up the client to keep listening
+client.loop_start()
 try:
-	client.loop_forever() 
+	# Loop at a slower rate that the new messages are published and print latest info
+	while True:
+		count += 1
+		time_sleep(17)
+		print(count,latest_msg.topic,str(latest_msg.payload)) 
 except KeyboardInterrupt:
 	print(".........Ctrl+C pressed... I will tell everyone I am stopping")
-	time_sleep(5) 
+	client.loop_stop() 
+	time_sleep(2.5) 
 	sys_exit()

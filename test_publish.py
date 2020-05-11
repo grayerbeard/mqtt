@@ -33,14 +33,14 @@ while True:
 		time_text = make_time_text(datetime.now())
 		message =  "msg#: " + str(count) + "  Time Here is " + time_text
 		# mqttc.publish(topic_top + topic_separator + topic_sub, message)
-		mqttc.publish("House/test", message)
+		mqttc.publish("House/test", message,retain=True)
 		mqttc.loop(2) #timeout = 2s
 		print("Loop : ",count," At : ",time_text)
 		time_sleep(10) # wait a bit before sending again
 	except KeyboardInterrupt:
-		print(".........Ctrl+C pressed... I will tell everyone I am stopping")
+		print(".........Ctrl+C pressed... I will stop")
 		message =  "msg#: " + str(count) + "I have been stopped, Time Here is " + make_time_text(datetime.now()) 
 		mqttc.publish(topic_top + topic_separator + topic_sub, message)
 		mqttc.loop(2) #timeout = 2s
-		time_sleep(5) 
+		time_sleep(2.5) 
 		sys_exit()
