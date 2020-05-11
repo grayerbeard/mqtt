@@ -32,18 +32,31 @@ My result is shown below where the 1833 items are the mosquitto running.
 (You can test that by doing 'sudo service mosquitto stop' and then 'sudo service mosquitto restart')
 
 '''pi@RPi400sd2:~/mqtt $ sudo netstat -l -t
+
 Active Internet connections (only servers)
-Proto Recv-Q Send-Q Local Address           Foreign Address         State      
-tcp        0      0 0.0.0.0:5900            0.0.0.0:*               LISTEN     
-tcp        0      0 0.0.0.0:http            0.0.0.0:*               LISTEN     
+
+|Proto|Recv-Q|Send-Q|Local Address|Foreign Address|State|
+| --- | --- | --- | --- | --- | --- |
+|tcp|0|0|0.0.0.0:5900|0.0.0.0:*|LISTEN|     
+
+tcp         0       0       0.0.0.0:http        0.0.0.0:*           LISTEN     
+
 tcp        0      0 0.0.0.0:ftp             0.0.0.0:*               LISTEN     
+
 tcp        0      0 0.0.0.0:ssh             0.0.0.0:*               LISTEN     
+
 tcp        0      0 localhost:ipp           0.0.0.0:*               LISTEN     
+
 tcp        0      0 0.0.0.0:1883            0.0.0.0:*               LISTEN     
+
 tcp6       0      0 [::]:5900               [::]:*                  LISTEN     
+
 tcp6       0      0 [::]:http               [::]:*                  LISTEN     
+
 tcp6       0      0 [::]:ssh                [::]:*                  LISTEN     
+
 tcp6       0      0 localhost:ipp           [::]:*                  LISTEN     
+
 tcp6       0      0 [::]:1883               [::]:*                  LISTEN'''
 
 You run the server on one R Pi and you run the Python3 code on other R Pis.
