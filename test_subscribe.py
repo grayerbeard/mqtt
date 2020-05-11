@@ -13,6 +13,7 @@ import paho.mqtt.client as mqtt
 from time import sleep as time_sleep
 from utility import make_time_text
 from datetime import datetime
+from sys import exit as sys_exit
 
 broker_address = "192.168.0.120" # Change to suite your brokers address
 broker_port = 1883 # Check on server port being used 'sudo netstat -l -t'
@@ -20,22 +21,24 @@ topic_top = "House"
 topic_sub = "test"
 topic_separator = "/"
 count = 0
-house_test_latest.msg = ""
-house_test_latest.count = 0
+house_test_latest_msg = ""
+house_test_latest_count = 0
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(self, client, userdata, rc):
 	print("Connected with result code "+str(rc))
 	# Subscribing in on_connect() means that if we lose the connection and
 	# reconnect then subscriptions will be renewed.
-	self.subscribe(topic_top + topic_separator + topic_sub)
+	# self.subscribe(topic_top + topic_separator + topic_sub)
+	self.subscribe("House/test")
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
 	count += 1
-	if msg.topic = topic_top + topic_separator + topic_sub:
-		house_test_latest.msg = str(msg.payload)
-		house_test_latest.count = count
+	if msg.topic == (topic_top + topic_separator + topic_sub):
+		house_test_latest_msg = str(msg.payload)
+		house_test_latest_count = count
+		print("Msg# :",house_test_latest_count," Time: ",make_time_text(datetime.now()),"\n","  Latest House/Test Message is : ",house_test_latest_msg,"\n")
 	else:
 		print("Topic: ", msg.topic+'\nMessage: '+str(msg.payload))
 
@@ -48,9 +51,9 @@ client.connect(broker_address, broker_port, 60)
 # handles reconnecting.
 # Other loop*() functions are available that give a threaded interface and a
 # manual interface.
-
-client.loop_forever()
-
-while True:
-	print("Msg# :",house_test_latest.count," Time: ",make_time_text(datetime.now()),"\n","  Latest House/Test Message is : ",house_test_latest,"\n")
-	time_sleep(7) 
+try:
+	client.loop_forever() 
+except KeyboardInterrupt:
+	print(".........Ctrl+C pressed... I will tell everyone I am stopping")
+	time_sleep(5) 
+	sys_exit()
