@@ -3,6 +3,13 @@ Developement based on https://www.elementzonline.com/blog/running-mqtt-broker-in
 
 Also incorporated info from http://www.steves-internet-guide.com/into-mqtt-python-client/ and several other places.
 
+The aim was that the code here could be copy pasted into another application.  In my case, for starters I will add the publisher to https://github.com/grayerbeard/sauna to publish the Sauna Temperature and the Subscriber to https://github.com/grayerbeard/aiy so that, when I am waiting for the Sauna to warm up I can say "OK Google Report Sauna" and it will tell me the Sauna Temperature.   
+
+# Notes
+
+## May 11th 2020
+All tested and working ready to incorporate into the Sauna and AIY code.
+
 # Installation
 
 Ideally use three R Pi and get set up so that they each have a separate function. Server or Publisher or Subscriber. 
