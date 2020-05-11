@@ -1,5 +1,7 @@
 # mqtt
 Developement based on https://www.elementzonline.com/blog/running-mqtt-broker-in-raspberry-pi to allow domestic instalation of R Pis and an R Pi with AIY Voice Kit to exchange data adapted for Python3.
+Also incorporated info from http://www.steves-internet-guide.com/into-mqtt-python-client/    and
+
 
 # Installation
 
