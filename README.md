@@ -1,5 +1,5 @@
 # mqtt
-Developement based on https://www.elementzonline.com/blog/running-mqtt-broker-in-raspberry-pi to allow domestic instalation of R Pis and an R Pi with AIY Voice Kit to exchange data 
+Developement based on https://www.elementzonline.com/blog/running-mqtt-broker-in-raspberry-pi to allow domestic instalation of R Pis and an R Pi with AIY Voice Kit to exchange data adapted for Python3.
 
 # Installation
 
@@ -43,3 +43,6 @@ tcp6       0      0 [::]:http               [::]:*                  LISTEN
 tcp6       0      0 [::]:ssh                [::]:*                  LISTEN     
 tcp6       0      0 localhost:ipp           [::]:*                  LISTEN     
 tcp6       0      0 [::]:1883               [::]:*                  LISTEN'''
+
+You run the server on one R Pi and you run the Python3 code on other R Pis.
+
