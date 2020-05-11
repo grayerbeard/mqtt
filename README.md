@@ -1,13 +1,11 @@
 # mqtt
-Developement based on https://www.elementzonline.com/blog/running-mqtt-broker-in-raspberry-pi to allow domestic instalation of R Pis and an R Pi with AIY Voice Kit to exchange data adapted for Python3.
-Also incorporated info from http://www.steves-internet-guide.com/into-mqtt-python-client/    and several other places.
+Developement based on https://www.elementzonline.com/blog/running-mqtt-broker-in-raspberry-pi to allow domestic instalation testing of R Pis using MQTT to pulish/subscribe information.  The code is configured with the aim of allowing easy incorporation into another program.
 
-The aim was to develope the code so that it was ready to be inserted into an application where the clinent was runnings a constant loop that at any stage might want to get the latest state of the publishers status.
-
+Also incorporated info from http://www.steves-internet-guide.com/into-mqtt-python-client/ and several other places.
 
 # Installation
 
-Ideally use three R Pi and get set up so that they each have a separate function. 
+Ideally use three R Pi and get set up so that they each have a separate function. Server or Publisher or Subscriber. 
 
 I found it easiest to control things from my Windows 10 Laptop where I set up FileZilla FTP Client and Termius" SSH client so that they can both communicate to all three devices, and when developing also with a browser to GitHub.
 
@@ -15,7 +13,7 @@ I found it easiest to control things from my Windows 10 Laptop where I set up Fi
 
 ## MQTT Server
 
-R Pi "One" is the MQTT server where you install 'mosquitto' MQTT server using 
+R Pi "One" is the MQTT server where you install 'mosquitto' MQTT server using. You DO NOT need this on either the Subscriber or the Publisher.  Also you do not need the  
 
 'sudo apt-get install mosquitto'
 
@@ -59,11 +57,25 @@ Active Internet connections (only servers)
 
 ## Publishers and Subscribers
 
-So now you have the Nessage "Telephone exchange" running and you need a "sender" and a "receiver".
+So now you have the Message "Telephone exchange" running and you need a "sender" and a "receiver".
 
 On idealy two but one will work Install the code from this repository using
 
 'git clone https://github.com/grayerbeard/mqtt.git /home/pi/mqtt'
 
-Then run the relavant Python scripts on each R Pi or I have provided commands to start them in Tmux sessions (for that you may need to install tmux with sudo apt install tmux)
+Then install the python module using
+
+'sudo pip3 install paho-mqtt'
+
+Then run the relavant Python scripts on each R Pi. (or I have provided commands to start them in Tmux sessions for that you may need to install tmux with 'sudo apt install tmux')
+
+First on the publisher
+
+'python3 test_publisher.py'
+
+Then on the subscriber 
+
+'python3 test_subscriber.py'
+
+The subscriber loops less often than the publisher and the format would allow the subscriber to be any looping control program that needs to sometimes get the status of the publisher.
 
