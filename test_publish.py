@@ -12,7 +12,7 @@ Was revised to work with Python3
 
 import paho.mqtt.client as mqtt
 from time import sleep as time_sleep
-from utility import make_time_text
+from utility import make_time_text,fileexists
 from datetime import datetime
 from sys import exit as sys_exit
 from config import class_config
