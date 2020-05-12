@@ -30,10 +30,17 @@ global latest_msg
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(self, client, userdata, rc):
+	''' Result Codes
+	0: Connection successful 
+	1: Connection refused – incorrect protocol version 
+	2: Connection refused – invalid client identifier 
+	3: Connection refused – server unavailable 
+	4: Connection refused – bad username or password 
+	5: Connection refused – not authorised 
+	6-255: Currently unused. 
+	Subscribing in on_connect() means that if we lose the connection and
+	reconnect then subscriptions will be renewed.'''
 	print("Connected with result code "+str(rc))
-	# Subscribing in on_connect() means that if we lose the connection and
-	# reconnect then subscriptions will be renewed.
-	# self.subscribe(topic_top + topic_separator + topic_sub)
 	self.subscribe(config.topic)
 
 # The callback for when a PUBLISH message is received from the server.
@@ -52,7 +59,7 @@ try:
 	while True:
 		count += 1
 		time_sleep(17)
-		print(count,latest_msg.topic,str(latest_msg.payload)) 
+		print(str(count) + ":" + latest_msg.topic + ":" + latest_msg.payload.decode() + ":") 
 except KeyboardInterrupt:
 	print(".........Ctrl+C pressed... I am stopping")
 	client.loop_stop() 
