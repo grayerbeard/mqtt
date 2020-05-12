@@ -14,17 +14,15 @@ from time import sleep as time_sleep
 from utility import make_time_text
 from datetime import datetime
 from sys import exit as sys_exit
-from config import class_config
 
-config = class_config()
-if fileexists(config.config_filename):		
-	print( "will try to read Config File : " ,config.config_filename)
-	config.read_file() # overwrites from file
-else : # no file so file needs to be writen
-	config.write_file()
-	print("New Config File Made with default values, you probably need to edit it")
-	
+broker_address = "192.168.0.120" # Change to suite your brokers address
+broker_port = 1883 # Check on server port being used 'sudo netstat -l -t'
+topic_top = "House"
+topic_sub = "test"
+topic_separator = "/"
 count = 0
+house_test_latest_msg = "Nothing Yet"
+house_test_latest_count = 0
 # set latest_message global so that on_message can set it with latest info
 global latest_msg
 
@@ -34,17 +32,21 @@ def on_connect(self, client, userdata, rc):
 	# Subscribing in on_connect() means that if we lose the connection and
 	# reconnect then subscriptions will be renewed.
 	# self.subscribe(topic_top + topic_separator + topic_sub)
-	self.subscribe(config.topic)
+	self.subscribe("House/test")
+
+#def on_message(client, userdata, msg):
+#    print("Topic: ", msg.topic+'\nMessage: '+str(msg.payload))
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
 	global latest_msg
 	latest_msg = msg
+	#print("Msg# :",count,"Latest House/Test Message is : ",msg.topic,str(msg.payload),"\n")
 
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
-client.connect(config.broker_address, config.broker_port, 60)
+client.connect(broker_address, broker_port, 60)
 # Set up the client to keep listening
 client.loop_start()
 try:

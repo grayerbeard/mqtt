@@ -15,34 +15,32 @@ from time import sleep as time_sleep
 from utility import make_time_text
 from datetime import datetime
 from sys import exit as sys_exit
-from config import class_config
 
-config = class_config()
-if fileexists(config.config_filename):		
-	print( "will try to read Config File : " ,config.config_filename)
-	config.read_file() # overwrites from file
-else : # no file so file needs to be writen
-	config.write_file()
-	print("New Config File Made with default values, you probably need to edit it")
-
+broker_address = "192.168.0.120" # Change to suite your brokers address
+broker_port = 1883 # Check on server port being used 'sudo netstat -l -t'
+topic_top = "House"
+topic_sub = "test"
+topic_separator = "/"
 count = 0
 
 mqttc = mqtt.Client("python_pub")
-mqttc.connect(config.broker_address, config.broker_port) # use the ip of your rpi here
+mqttc.connect(broker_address, broker_port) # use the ip of your rpi here
+
 
 while True:
 	try:
 		count += 1
 		time_text = make_time_text(datetime.now())
 		message =  "msg#: " + str(count) + "  Time Here is " + time_text
-		mqttc.publish(config.topic,message,retain=True)
+		# mqttc.publish(topic_top + topic_separator + topic_sub, message)
+		mqttc.publish("House/test", message,retain=True)
 		mqttc.loop(2) #timeout = 2s
 		print("Loop : ",count," At : ",time_text)
 		time_sleep(10) # wait a bit before sending again
 	except KeyboardInterrupt:
 		print(".........Ctrl+C pressed... I will stop")
 		message =  "msg#: " + str(count) + "I have been stopped, Time Here is " + make_time_text(datetime.now()) 
-		mqttc.publish(topic, message)
+		mqttc.publish(topic_top + topic_separator + topic_sub, message)
 		mqttc.loop(2) #timeout = 2s
 		time_sleep(2.5) 
 		sys_exit()
