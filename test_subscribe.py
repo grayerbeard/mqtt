@@ -60,9 +60,10 @@ try:
 		count += 1
 		time_sleep(1.33 * config.scan_delay)
 		print("My Loop Count (every " + str(1.33 * config.scan_delay) + " seconds : " + str(count) + ":"
-		Message Received on Topic : \"" + config.topic + "\" was : " + latest_msg.payload.decode()) 
+		Message Received on Topic : \"" + config.topic + "\" was >" + latest_msg.payload.decode() + "<") 
 except KeyboardInterrupt:
 	print(".........Ctrl+C pressed... I am stopping")
+	print("Last Message Received on Topic : \"" + config.topic + "\" was >" + latest_msg.payload.decode() + "<") 
 	client.loop_stop() 
 	time_sleep(2.5) 
 	sys_exit()

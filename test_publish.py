@@ -37,13 +37,13 @@ while True:
 		message =  "msg#: " + str(count) + "  Time Here is " + time_text
 		mqttc.publish(config.topic,message,retain=True)
 		mqttc.loop(2) #timeout = 2s
-		print("My Loop# : " + str(count) + " Message sent to Topic : \"" + config.topic + "\" was : " + message)
-		time_sleep(config.scan.delay) # wait a bit before sending again
+		print("My Loop# : " + str(count) + " Message sent to Topic : \"" + config.topic + "\" was >" + message + "<")
+		time_sleep(config.scan_delay) # wait a bit before sending again
 	except KeyboardInterrupt:
 		print(".........Ctrl+C pressed... I tell everyone I am stopping")
 		message =  "msg#: " + str(count) + "  I have been stopped, Time Here was " + make_time_text(datetime.now()) 
 		mqttc.publish(config.topic, message)
 		mqttc.loop(2) #timeout = 2s
-		print("Final message sent to Topic : \"" + config.topic + "\" was : " + message)
+		print("Final message sent to Topic : \"" + config.topic + "\" was >" + message + "<")
 		time_sleep(2.5) 
 		sys_exit()
