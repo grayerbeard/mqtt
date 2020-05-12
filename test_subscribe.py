@@ -11,7 +11,7 @@ Was revised to work with Python3
 
 import paho.mqtt.client as mqtt
 from time import sleep as time_sleep
-from utility import make_time_text
+from utility import fileexists
 from datetime import datetime
 from sys import exit as sys_exit
 from config import class_config
@@ -54,7 +54,7 @@ try:
 		time_sleep(17)
 		print(count,latest_msg.topic,str(latest_msg.payload)) 
 except KeyboardInterrupt:
-	print(".........Ctrl+C pressed... I will tell everyone I am stopping")
+	print(".........Ctrl+C pressed... I am stopping")
 	client.loop_stop() 
 	time_sleep(2.5) 
 	sys_exit()
